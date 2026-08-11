@@ -6,7 +6,7 @@ If you have any questions just join my discord and ping me : https://discord.gg/
 
 
 
->This guide is a complete walkthrough of a Roblox Hyperion emulator, reverse engineered from `Cosmic Emulator (wich appears to be Volt emulator)`.
+>This guide is a complete walkthrough of a Roblox Hyperion emulator, reverse engineered from `Cosmic Emulator (which appears to be Volt emulator)`.
 
 >Author : Krypt
 >Join my discord for any questions : https://discord.gg/CgFPbvSaU
@@ -27,7 +27,7 @@ Initialy i thought the emulator was a bytecode VM. But it appears to be a fault 
 
 4. Execution resumes (`EXCEPTION_CONTINUE_EXECUTION`) -> native Hyperion code runs clearly.
 
-5. Every new page repeats this cycle. Hyperion calls its own approximate 3700 functions, herlper routines kept in clear in `.themida`, and windows APIs - wich it calls not by name but through a table of pointers it builds directly, looking up each Windows function by a fingerprint instead of its name.
+5. Every new page repeats this cycle. Hyperion calls its own approximate 3700 functions, helper routines kept in clear in `.themida`, and windows APIs - which it calls not by name but through a table of pointers it builds directly, looking up each Windows function by a fingerprint instead of its name.
 
 
 I figured out the "emulated" code is Hyperion's own code, executed after page by  page decryption. The "VM" is the VEH + translator + crypto machinery that decrypts and presents pages on demand.
@@ -71,7 +71,7 @@ Layout of the emulator :
 
 ## Step 2 - Jump into the encrypted code on  purpose to trigger a fault
 
-`DllMain` spawns a thread that loads the payload entry point into `rax` and does a `jmp rax` into the encrypted / non executable page. That jump raises an `ACCESS_VIOLATION` wich is exactly what is searched, the VEH waits for this fault to be done.
+`DllMain` spawns a thread that loads the payload entry point into `rax` and does a `jmp rax` into the encrypted / non executable page. That jump raises an `ACCESS_VIOLATION` which is exactly what is searched, the VEH waits for this fault to be done.
 
 
 ```asm
@@ -158,7 +158,7 @@ __int64 register_veh(__int64 a1) {    // a1 = emulator module base
 
 
 
-The PE parser validates the image is a 64 bit PE32+ (`"MZ"` 0x5A4D, `"PE"` 0x4550, machine `0x8664` AMD64, magic `0x20B` PE32+) and walks the section table (`e_lfanew + SizeOfOptionalHeader + 24`). Only `IMAGE_SCN_CNT_CODE` sections become "managed" pages, that is how `.data` is exlcuded ans it stays encrypted.
+The PE parser validates the image is a 64 bit PE32+ (`"MZ"` 0x5A4D, `"PE"` 0x4550, machine `0x8664` AMD64, magic `0x20B` PE32+) and walks the section table (`e_lfanew + SizeOfOptionalHeader + 24`). Only `IMAGE_SCN_CNT_CODE` sections become "managed" pages, that is how `.data` is excluded ans it stays encrypted.
 
 
 
@@ -339,7 +339,7 @@ There is **no `lea rbx,[rip+...]`**, the key never lives at a fixed address.
 
 
 
-**How to get cleartext without the key :** the emulator decrypts pages in place at `module_base + RVA`, and the ceartext persists in memory untiil the protector tears down.
+**How to get cleartext without the key :** the emulator decrypts pages in place at `module_base + RVA`, and the cleartext persists in memory untiil the protector tears down.
 A dumper (`OpenProcess` + `VM_READ`, no debug port so the anti debug never triggers) reads the cleartext straight out of the live process.
 
 
