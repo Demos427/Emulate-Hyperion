@@ -2,14 +2,14 @@
 
 This guide took me a lot of time to write.
 
-If you have any questions just join my discord and ping me : https://discord.gg/CgFPbvSaU
+If you have any questions just join my discord and ping me : https://discord.gg/kJ5RmD3xW
 
 
 
 >This guide is a complete walkthrough of a Roblox Hyperion emulator, reverse engineered from `Cosmic Emulator (which appears to be Volt emulator)`.
 
 >Author : Krypt
->Join my discord for any questions : https://discord.gg/CgFPbvSaU
+>Join my discord for any questions : https://discord.gg/kJ5RmD3xW
 
 
 ---
